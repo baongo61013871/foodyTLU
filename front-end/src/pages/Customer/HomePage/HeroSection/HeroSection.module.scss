@@ -1,0 +1,31 @@
+// src/components/HeroSection.module.scss
+.heroContainer {
+    height: 600px; /* Chiều cao của Hero Section */
+    background-image: url('https://watermark.lovepik.com/photo/40015/5932.jpg_wh1200.jpg'); /* Thay thế URL bằng ảnh của bạn */
+    background-size: cover; /* Đảm bảo ảnh bao phủ toàn bộ vùng */
+    background-position: center; /* Căn giữa ảnh */
+    background-repeat: no-repeat; /* Không lặp lại ảnh */
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .heroContent {
+    bottom: 50px;
+    left: 100px;
+    z-index: 2; /* Đảm bảo nội dung nằm trên nền */
+
+    .lead {
+        margin-bottom: 40px;
+        font-size: 1.8rem;
+    }
+
+    .btn-order {
+        height: 50px;
+        min-width: 190px;
+        font-size: 1.6rem;
+    }
+  }
+
+  

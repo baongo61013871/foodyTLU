@@ -1,0 +1,31 @@
+// src/components/ProductDetailPage.module.scss
+.product-detail-page {
+    .product-name {
+      font-size: 2rem;
+    }
+  
+    .product-type {
+      font-size: 1rem;
+      color: #777;
+    }
+  
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+  
+    .product-description {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #555;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+  
+    .product-price {
+      font-size: 1.8rem;
+      color: #e63946;
+    }
+  }
+  

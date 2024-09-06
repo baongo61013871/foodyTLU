@@ -1,0 +1,63 @@
+.app-container {
+    display: flex;
+    .wrapper {
+        display: flex;
+        width: 100%;
+      }
+      
+      .content-food {
+        flex: 1;
+        padding: 20px;
+      }
+      
+      .table-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      .food-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      
+      .food-table th,
+      .food-table td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      .food-table th {
+        background-color: #34495e;
+        color: white;
+      }
+      
+      .edit-btn,
+      .delete-btn {
+        padding: 5px 10px;
+        margin-right: 5px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      .edit-btn {
+        background-color: #27ae60;
+        color: white;
+      }
+      
+      .delete-btn {
+        background-color: #e74c3c;
+        color: white;
+      }
+      
+      p {
+        font-weight: bold;
+      }
+      
+  }
+  
+  

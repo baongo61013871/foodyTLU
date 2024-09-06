@@ -1,0 +1,41 @@
+// src/components/SectionFeatures.module.scss
+.features-section {
+  background-color: #fff;
+  padding: 60px 0;
+
+  .feature-item {
+    text-align: center;
+  }
+
+  .feature-img, .feature-img-2 {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .feature-img {
+    background-image: url('https://www.upmenu.com/wp-content/uploads/2022/08/food-delivery-apps.jpg'); /* Thay thế bằng URL hình ảnh của bạn */
+  }
+
+  .feature-img-2 {
+    background-image: url('https://www.upmenu.com/wp-content/uploads/2022/08/food-delivery-apps.jpg'); /* Thay thế bằng URL hình ảnh của bạn */
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .section-description {
+    font-size: 1.6rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
