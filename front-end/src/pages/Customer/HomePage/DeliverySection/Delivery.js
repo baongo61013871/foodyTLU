@@ -49,12 +49,12 @@ const settings = {
     prevArrow: <PrevArrow />,
 };
 
-const Delivery = () => {
+const Delivery = ({ foodType }) => {
     return (
         <div className={cx('delivery-collection', 'border border-1 bg-light-emphasis')}>
             <div className="container">
                 <div className={cx('collection-title')}>
-                    <h1>Our Cuisines </h1>
+                    {foodType ? <h1>{'More ' + foodType}</h1> : <h1>Our Cuisines</h1>}
                     <p>If Eat Feels You Happy So why are you waiting for??</p>
                     <br></br>
                 </div>

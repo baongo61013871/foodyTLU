@@ -2,7 +2,7 @@ import HomePage from '~/pages/Customer/HomePage';
 import CartPage from '~/pages/Customer/CartPage';
 import OrderPage from '~/pages/Customer/OrderPage';
 import MenuPage from '~/pages/Customer/MenuPage';
-import FoodDetailPage from '~/pages/Customer/FoodDetailPage/FoodDetailPage';
+import ProductDetail from '~/pages/Customer/MenuPage/ProductDetail';
 import Login from '~/pages/Auth/Login';
 import FoodManagement from '~/pages/Admin/FoodManagement/FoodManageMent';
 import OrderManagement from '~/pages/Admin/OrderManagement/OrderManagement';
@@ -13,7 +13,7 @@ const publicRoutes = [
     { path: '/menu', component: MenuPage },
     { path: '/cart', component: CartPage },
     { path: '/orders', component: OrderPage },
-    { path: '/product/:id', component: FoodDetailPage },
+    { path: '/product/:id', component: ProductDetail, product: true },
     { path: '/admin', component: FoodManagement },
     { path: '/food-management', component: FoodManagement },
     { path: '/order-management', component: OrderManagement },

@@ -8,34 +8,8 @@
       }
     }
   
-    .card {
-      border: none;
-      overflow: hidden;
-      transition: all 0.3s ease;
-  
-      &:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      }
-  
-      .card-img-top {
-        height: 200px;
-        object-fit: cover;
-        border-radius: 10px;
-      }
-  
-      .badge {
-        font-size: 0.8rem;
-      }
-  
-      .card-body {
-        padding: 15px;
-      }
-    }
+   
   }
-
-  
-
   .search-wrapper{
     margin-left: auto;
     width: 400px;
