@@ -1,0 +1,135 @@
+.order-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .selected-items {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .item-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    margin-right: 15px;
+    object-fit: cover;
+  }
+  
+  .item-info {
+    flex: 1;
+  }
+  
+  .item-info h4 {
+    margin: 0 0 5px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .item-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .order-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .bill-section,
+  .payment-method-section,
+  .address-section {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .bill-section h3,
+  .payment-method-section h3,
+  .address-section h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .bill-details p {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .payment-options label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .address-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  .order-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .order-now-btn,
+  .cancel-order-btn {
+    padding: 12px 20px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .order-now-btn {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .order-now-btn:hover {
+    background-color: #218838;
+  }
+  
+  .cancel-order-btn {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  .cancel-order-btn:hover {
+    background-color: #c82333;
+  }
+  

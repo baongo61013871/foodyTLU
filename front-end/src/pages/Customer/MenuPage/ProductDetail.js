@@ -83,6 +83,7 @@ const ProductDetail = ({ foodItems }) => {
                 <Delivery foodType={product.type} />
             </div>
             <ToastContainer
+                position="bottom-right"
                 autoClose={5000}
                 hideProgressBar={false}
                 newestOnTop={false}
