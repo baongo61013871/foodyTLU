@@ -3,7 +3,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './ProductDetail.module.scss';
@@ -19,7 +19,9 @@ const ProductDetail = ({ foodItems }) => {
     const { id } = useParams(); // Get the product id from the URL
     const [quantity, setQuantity] = useState(1);
     const product = foodItems.find((item) => item.id === parseInt(id)); // Find the product using the id
+    console.log(product);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     if (!product) {
         return <div>Product not found!</div>; // If no product is found, display this message
     }
@@ -43,7 +45,9 @@ const ProductDetail = ({ foodItems }) => {
         try {
             dispatch(addItem({ ...product, quantity }));
             setQuantity((prev) => prev + 1);
-            toast.success(`Đã thêm ${product.name} vào giỏ hàng.`);
+            toast.success(`Đã thêm ${quantity} ${product.name} vào giỏ hàng.`, {
+                onClick: () => navigate('/cart'),
+            });
         } catch (error) {
             toast.error('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng.');
         }
@@ -59,7 +63,7 @@ const ProductDetail = ({ foodItems }) => {
                             <img src={product.imageUrl} alt={product.name} className={cx('product-img', 'img-fluid')} />
                         </div>
                         <div className={cx('col-md-6')}>
-                            <h3 className={cx('fw-bold', 'mb-3')}>Price: {product.price}</h3>
+                            <h3 className={cx('fw-bold', 'mb-3')}>Price: {product.price}$</h3>
                             <p className={cx('text-muted')}>{product.type}</p>
                             <div className={cx('d-flex', 'align-items-center', 'mb-3')}>
                                 {renderStars(product.rating)}
@@ -78,7 +82,16 @@ const ProductDetail = ({ foodItems }) => {
             <div className={cx('more-option')}>
                 <Delivery foodType={product.type} />
             </div>
-            <ToastContainer />
+            <ToastContainer
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <Footer />
         </div>
     );

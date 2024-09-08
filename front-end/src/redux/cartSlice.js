@@ -6,7 +6,7 @@ const initialState = {
     totalPrice: 0, // Tổng giá trị của giỏ hàng
 };
 
-const cartSlice = createSlice({
+export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
@@ -53,4 +53,3 @@ const cartSlice = createSlice({
 });
 
 export const { addItem, removeItem, updateQuantity } = cartSlice.actions;
-export default cartSlice.reducer;
