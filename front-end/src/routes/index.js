@@ -8,18 +8,22 @@ import FoodManagement from '~/pages/Admin/FoodManagement/FoodManageMent';
 import OrderManagement from '~/pages/Admin/OrderManagement/OrderManagement';
 import PromotionManagement from '~/pages/Admin/PromotionManagement/PromotionManagement';
 // Public Routes
+// Public Routes
 const publicRoutes = [
-    { path: '/', component: HomePage },
-    { path: '/menu', component: MenuPage },
-    { path: '/cart', component: CartPage },
-    { path: '/orders', component: OrderPage },
+    { path: '/', component: HomePage, isProtected: 'customer' },
+    { path: '/menu', component: MenuPage, isProtected: 'customer' },
+    { path: '/cart', component: CartPage, isProtected: 'customer' },
+    { path: '/orders', component: OrderPage, isProtected: 'customer' },
     { path: '/product/:id', component: ProductDetail, product: true },
-    { path: '/admin', component: FoodManagement },
-    { path: '/food-management', component: FoodManagement },
-    { path: '/order-management', component: OrderManagement },
-    { path: '/promotion-management', component: PromotionManagement },
+    { path: '/login', component: Login }, // Đăng nhập không được bảo vệ
 ];
 
-const privateRoutes = [{ path: '/login', component: Login }];
+// Admin Routes
+const adminRoutes = [
+    { path: '/admin', component: FoodManagement, isProtected: 'admin' },
+    { path: '/food-management', component: FoodManagement, isProtected: 'admin' },
+    { path: '/order-management', component: OrderManagement, isProtected: 'admin' },
+    { path: '/promotion-management', component: PromotionManagement, isProtected: 'admin' },
+];
 
-export { publicRoutes, privateRoutes };
+export { publicRoutes, adminRoutes };

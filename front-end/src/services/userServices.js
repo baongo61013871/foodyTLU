@@ -1,6 +1,4 @@
-import axios from 'axios';
-const handleLoginApi = (userEmail, userPassword) => {
-    return axios.post('/api/login', { email: userEmail, password: userPassword });
+import instance from '~/utils/axios';
+export const handleLoginApi = (userEmail, userPassword) => {
+    return instance.post('/api/login', { email: userEmail, password: userPassword });
 };
-
-export { handleLoginApi };

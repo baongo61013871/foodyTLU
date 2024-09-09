@@ -10,7 +10,6 @@ function HomePage() {
     return (
         <div className={cx('wrapper')}>
             <Header />
-
             <HeroSection />
             <FeatureSection />
             <Delivery />
