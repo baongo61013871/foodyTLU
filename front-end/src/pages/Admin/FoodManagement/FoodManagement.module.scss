@@ -1,63 +1,79 @@
 .app-container {
-    display: flex;
-    .wrapper {
-        display: flex;
-        width: 100%;
-      }
-      
-      .content-food {
-        flex: 1;
-        padding: 20px;
-      }
-      
-      .table-container {
-        background-color: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-      
-      .food-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-      }
-      
-      .food-table th,
-      .food-table td {
-        padding: 10px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-      }
-      
-      .food-table th {
-        background-color: #34495e;
-        color: white;
-      }
-      
-      .edit-btn,
-      .delete-btn {
-        padding: 5px 10px;
-        margin-right: 5px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-      }
-      
-      .edit-btn {
-        background-color: #27ae60;
-        color: white;
-      }
-      
-      .delete-btn {
-        background-color: #e74c3c;
-        color: white;
-      }
-      
-      p {
-        font-weight: bold;
-      }
-      
+  display: flex;
+  .wrapper {
+    flex-grow: 1;
+    padding: 20px;
   }
   
+    
+  .table-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
   
+  .food-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .food-table th,
+  .food-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .food-table th {
+    background-color: #f5f5f5;
+  }
+  
+  .food-table img {
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  /* Button Styling */
+  .add-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-button:hover {
+    background-color: #218838;
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .edit-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .delete-btn {
+    background-color: #dc3545;
+  }
+  
+  .delete-btn:hover {
+    background-color: #c82333;
+  }
+}
+

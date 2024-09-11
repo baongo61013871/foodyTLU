@@ -23,7 +23,7 @@ const OrderPage = () => {
             alert('Please enter your address!');
             return;
         }
-        alert(`Order placed with payment method: ${paymentMethod}`);
+        alert(`Order placed with payment method: ${paymentMethod} Succeed!!!`);
     };
 
     const handleCancelOrder = () => {

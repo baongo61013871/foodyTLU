@@ -1,24 +1,23 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
+// src/components/PrivateRoute.js
 import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
-const PrivateRoute = ({ children }) => {
-    const { isAuthenticated, roleId } = useSelector((state) => state.auth);
-
+const PrivateRoute = ({ children, isProtected }) => {
+    const { isAuthenticated, user } = useSelector((state) => state.auth);
+    const userCheckRole = user.user.roleId;
     if (!isAuthenticated) {
+        // Nếu chưa đăng nhập, chuyển hướng tới trang đăng nhập
         return <Navigate to="/login" />;
     }
 
-    // Nếu trang yêu cầu quyền admin
-    if (children.props.protected === 'admin' && roleId !== 'R1') {
-        return <Navigate to="/customer/home" />;
+    // Nếu là customer và đang cố truy cập vào các route của admin
+
+    if (userCheckRole === 'R2' && isProtected === 'admin') {
+        // Chuyển hướng về trang chủ nếu customer cố truy cập vào route dành cho admin
+        return <Navigate to="/" />;
     }
 
-    // Nếu trang yêu cầu quyền khách hàng
-    if (children.props.protected === 'customer' && roleId !== 'R2') {
-        return <Navigate to="/admin/dashboard" />;
-    }
-
+    // Nếu hợp lệ, trả về component được bảo vệ
     return children;
 };
 

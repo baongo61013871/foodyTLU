@@ -1,7 +1,7 @@
 // src/components/ProductDetail.js
 
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
@@ -13,13 +13,15 @@ import Header from '~/components/Header';
 import Footer from '~/components/Footer/Footer';
 import Delivery from '../HomePage/DeliverySection/Delivery';
 import { addItem } from '~/redux/cartSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles);
 
-const ProductDetail = ({ foodItems }) => {
+const ProductDetail = () => {
     const { id } = useParams(); // Get the product id from the URL
     const [quantity, setQuantity] = useState(1);
+    const foodItems = useSelector((state) => state.foods.foodItems);
     const product = foodItems.find((item) => item.id === parseInt(id)); // Find the product using the id
-    console.log(product);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     if (!product) {
@@ -57,10 +59,12 @@ const ProductDetail = ({ foodItems }) => {
             <Header />
             <div className="container">
                 <div className={cx('product-detail', 'container', 'py-5')}>
-                    <h2 className={cx('page-title', 'text-center', 'fw-bold', 'mb-4', 'fs-1')}>{product.name}</h2>
-                    <div className={cx('row')}>
+                    <h2 className={cx('page-title', 'text-center', 'fw-bold', 'mb-4', 'fs-1', 'font-vietnam')}>
+                        {product.name}
+                    </h2>
+                    <div className={cx('row', 'g-4')}>
                         <div className={cx('col-md-6')}>
-                            <img src={product.imageUrl} alt={product.name} className={cx('product-img', 'img-fluid')} />
+                            <img src={product.imageUrl} alt={product.name} className={cx('product-img')} />
                         </div>
                         <div className={cx('col-md-6')}>
                             <h3 className={cx('fw-bold', 'mb-3')}>Price: {product.price}$</h3>
@@ -70,7 +74,11 @@ const ProductDetail = ({ foodItems }) => {
                                 <span className={cx('ms-2')}>{product.rating} / 5</span>
                             </div>
                             <p>Estimated Delivery Time: {product.time}</p>
-                            <button className={cx('btn', 'btn-primary')} onClick={handleAddToCart}>
+                            <button
+                                className={cx('btn', 'btn-dark', 'py-3', 'px-5', 'fs-5', 'my-4')}
+                                onClick={handleAddToCart}
+                            >
+                                <FontAwesomeIcon icon={faCartShopping} className="me-4" />
                                 Add to Cart
                             </button>
                             <h4 className={cx('fw-bold', 'mt-3')}>Product Description</h4>
@@ -83,7 +91,7 @@ const ProductDetail = ({ foodItems }) => {
                 <Delivery foodType={product.type} />
             </div>
             <ToastContainer
-                position="bottom-right"
+                position="top-right"
                 autoClose={5000}
                 hideProgressBar={false}
                 newestOnTop={false}

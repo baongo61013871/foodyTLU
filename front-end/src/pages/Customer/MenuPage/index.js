@@ -1,6 +1,7 @@
 // src/components/MenuPage.js
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './MenuPage.module.scss';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames/bind';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import Header from '~/components/Header';
@@ -8,211 +9,32 @@ import Footer from '~/components/Footer/Footer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import ProductCard from './ProductCard';
+import Fuse from 'fuse.js';
+
 const cx = classNames.bind(styles);
 
 const MenuPage = () => {
-    const foodItems = [
-        {
-            id: 1,
-            name: 'Samosa',
-            type: 'Indian Food',
-            price: 20,
-            rating: 4.0,
-            time: '20min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-        {
-            id: 2,
-            name: 'Pav-Bhaji',
-            type: 'Indian Food',
-            price: 60,
-            rating: 4.5,
-            time: '30min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-        {
-            id: 3,
-            name: 'Pakora',
-            type: 'Indian Food',
-            price: 20,
-            rating: 3.5,
-            time: '20min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-        {
-            id: 4,
-            name: 'Keema',
-            type: 'Indian Food',
-            price: 40,
-            rating: 4.0,
-            time: '30min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-        {
-            id: 5,
-            name: 'Dal Makhani',
-            type: 'Indian Food',
-            price: 50,
-            rating: 4.5,
-            time: '30min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-        {
-            id: 6,
-            name: 'Rajma',
-            type: 'VietNam Food',
-            price: 40,
-            rating: 3.0,
-            time: '40min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
+    const foodItems = useSelector((state) => state.foods.foodItems);
 
-        {
-            id: 1,
-            name: 'Samosa',
-            type: 'VietNam Food',
-            price: 20,
-            rating: 4.0,
-            time: '20min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-        {
-            id: 2,
-            name: 'Pav-Bhaji',
-            type: 'VietNam Food',
-            price: 60,
-            rating: 4.5,
-            time: '30min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-        {
-            id: 3,
-            name: 'Pakora',
-            type: 'Indian Food',
-            price: 20,
-            rating: 3.5,
-            time: '20min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-        {
-            id: 4,
-            name: 'Keema',
-            type: 'Indian Food',
-            price: 40,
-            rating: 4.0,
-            time: '30min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-        {
-            id: 5,
-            name: 'Dal Makhani',
-            type: 'Indian Food',
-            price: 50,
-            rating: 4.5,
-            time: '30min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-        {
-            id: 6,
-            name: 'Rajma',
-            type: 'Indian Food',
-            price: 40,
-            rating: 3.0,
-            time: '40min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState(foodItems);
 
-        {
-            id: 1,
-            name: 'Samosa',
-            type: 'Indian Food',
-            price: 20,
-            rating: 4.0,
-            time: '20min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-        {
-            id: 2,
-            name: 'Pav-Bhaji',
-            type: 'Indian Food',
-            price: 60,
-            rating: 4.5,
-            time: '30min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-        {
-            id: 3,
-            name: 'Pakora',
-            type: 'Indian Food',
-            price: 20,
-            rating: 3.5,
-            time: '20min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-        {
-            id: 4,
-            name: 'Keema',
-            type: 'Indian Food',
-            price: 40,
-            rating: 4.0,
-            time: '30min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-        {
-            id: 5,
-            name: 'Dal Makhani',
-            type: 'Indian Food',
-            price: 50,
-            rating: 4.5,
-            time: '30min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-        {
-            id: 6,
-            name: 'Rajma',
-            type: 'Indian Food',
-            price: 40,
-            rating: 3.0,
-            time: '40min',
-            imageUrl: 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg',
-            description:
-                'A juicy gourmet burger with premium beef, fresh lettuce, tomatoes, and a special sauce. Served with crispy fries.',
-        },
-    ];
+    const fuse = new Fuse(foodItems, {
+        keys: ['name', 'type', 'description'],
+        threshold: 0.3,
+    });
+
+    const handleSearch = (event) => {
+        const query = event.target.value;
+        setSearchTerm(query);
+
+        if (query.trim() === '') {
+            setSearchResults(foodItems);
+        } else {
+            const results = fuse.search(query).map((result) => result.item);
+            setSearchResults(results);
+        }
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -221,13 +43,15 @@ const MenuPage = () => {
                 <h2 className={cx('page-title', 'text-center', 'fw-bold', 'mb-4', 'fs-1')}>
                     Search It, Eat It :- That's It!
                 </h2>
-                <div className={cx('search-wrapper', ' text-end')}>
+                <div className={cx('search-wrapper', 'text-end')}>
                     <InputGroup className={cx('search-bar')}>
                         <Form.Control
                             type="text"
                             placeholder="Tìm kiếm món ăn của bạn..."
                             aria-label="Search"
                             className={cx('shadow-sm', 'py-3', 'px-4', 'fs-5')}
+                            value={searchTerm}
+                            onChange={handleSearch} // Gọi hàm xử lý khi người dùng nhập
                         />
                         <Button variant="outline-secondary fs-5">
                             Search
@@ -236,8 +60,8 @@ const MenuPage = () => {
                     </InputGroup>
                 </div>
                 <div className={cx('row')}>
-                    {foodItems.map((item) => (
-                        <ProductCard item={item} />
+                    {searchResults.map((item) => (
+                        <ProductCard key={item.id} item={item} />
                     ))}
                 </div>
             </div>

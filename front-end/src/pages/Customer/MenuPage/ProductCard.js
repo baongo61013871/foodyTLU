@@ -40,7 +40,7 @@ const ProductCard = ({ item }) => {
                                 'text-dark',
                             )}
                         >
-                            {item.time}
+                            ~{item.time}min
                         </span>
                     </div>
                     <div className={cx('card-body')}>

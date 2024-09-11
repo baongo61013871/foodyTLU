@@ -1,15 +1,11 @@
+// src/App.js
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './redux/store';
 import { publicRoutes, adminRoutes } from '~/routes';
 import PrivateRoute from './components/PrivateRoute';
-
 function App() {
-    const foodItems = [
-        // ... (dữ liệu foodItems của bạn)
-    ];
-
     return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
@@ -23,12 +19,12 @@ function App() {
                                     key={index}
                                     path={route.path}
                                     element={
-                                        route.protected ? (
-                                            <PrivateRoute protected={route.protected}>
-                                                {route.product ? <Page foodItems={foodItems} /> : <Page />}
+                                        route.isProtected ? (
+                                            <PrivateRoute isProtected={route.isProtected}>
+                                                {route.product ? <Page /> : <Page />}
                                             </PrivateRoute>
                                         ) : route.product ? (
-                                            <Page foodItems={foodItems} />
+                                            <Page />
                                         ) : (
                                             <Page />
                                         )
@@ -45,7 +41,7 @@ function App() {
                                     key={index}
                                     path={route.path}
                                     element={
-                                        <PrivateRoute protected={route.protected}>
+                                        <PrivateRoute isProtected={route.isProtected}>
                                             <Page />
                                         </PrivateRoute>
                                     }

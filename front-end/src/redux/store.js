@@ -6,18 +6,21 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import storage from 'redux-persist/lib/storage'; // sử dụng localStorage để lưu trữ
 import { cartSlice } from './cartSlice';
 import { authSlice } from './authSlice';
-
+import { foodSlice } from './foodSlice';
+import { orderSlice } from './orderSlice';
 // Cấu hình cho redux-persist
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['auth'], // Chỉ định reducer nào muốn lưu trữ (ở đây là auth)
+    whitelist: ['auth', 'cart', 'foods'], // Chỉ định reducer nào muốn lưu trữ (ở đây là auth)
 };
 
 // Kết hợp các reducer lại
 const rootReducer = combineReducers({
     cart: cartSlice.reducer,
     auth: authSlice.reducer,
+    foods: foodSlice.reducer,
+    orders: orderSlice.reducer,
 });
 
 // Tạo persisted reducer

@@ -43,7 +43,7 @@ const Cart = () => {
     };
     return (
         <div className={cx('cart-container')}>
-            <h2 className={cx('cart-title')}>Your Shopping Cart</h2>
+            <h2 className={cx('cart-title')}>Giỏ Hàng </h2>
             {cartItems.length === 0 ? (
                 <p className={cx('empty-cart')}>No items in cart.</p>
             ) : (

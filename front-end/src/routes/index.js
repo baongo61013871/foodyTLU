@@ -1,3 +1,5 @@
+// src/routes/index.js
+
 import HomePage from '~/pages/Customer/HomePage';
 import CartPage from '~/pages/Customer/CartPage';
 import OrderPage from '~/pages/Customer/OrderPage';
@@ -7,7 +9,7 @@ import Login from '~/pages/Auth/Login';
 import FoodManagement from '~/pages/Admin/FoodManagement/FoodManageMent';
 import OrderManagement from '~/pages/Admin/OrderManagement/OrderManagement';
 import PromotionManagement from '~/pages/Admin/PromotionManagement/PromotionManagement';
-// Public Routes
+
 // Public Routes
 const publicRoutes = [
     { path: '/', component: HomePage, isProtected: 'customer' },
@@ -15,7 +17,7 @@ const publicRoutes = [
     { path: '/cart', component: CartPage, isProtected: 'customer' },
     { path: '/orders', component: OrderPage, isProtected: 'customer' },
     { path: '/product/:id', component: ProductDetail, product: true },
-    { path: '/login', component: Login }, // Đăng nhập không được bảo vệ
+    { path: '/login', component: Login }, // Đăng nhập không yêu cầu bảo vệ
 ];
 
 // Admin Routes
