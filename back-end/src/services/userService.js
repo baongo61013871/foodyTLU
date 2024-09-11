@@ -166,11 +166,50 @@ const updateFoodService = async (foodData) => {
     throw new Error(`Error updating food: ${error.message}`);
   }
 };
+
+const createNewOrder = async (orderData) => {
+  try {
+    const newOrder = await db.Order.create({
+      user_id: orderData.user_id,
+      status: orderData.status,
+      shipping_address: orderData.shipping_address,
+      total: orderData.total,
+      orderDate: orderData.orderDate,
+    });
+    return newOrder;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+const getAllOrders = async () => {
+  // Thực hiện logic để lấy tất cả đơn hàng từ cơ sở dữ liệu
+  return await db.Order.findAll();
+};
+
+const deleteOrderById = async (orderId) => {
+  // Thực hiện logic để xóa đơn hàng theo ID
+  const result = await db.Order.destroy({ where: { id: orderId } });
+  return result > 0; // Trả về true nếu xóa thành công
+};
+
+const updateOrderService = async (orderData) => {
+  // Thực hiện logic để cập nhật đơn hàng
+  const order = await db.Order.findByPk(orderData.id);
+  if (order) {
+    return await order.update(orderData);
+  }
+  return null;
+};
 module.exports = {
   handleUserLogin,
+  handleUserRegister,
   createNewFood,
   getAllFoods,
   deleteFoodById,
   updateFoodService,
-  handleUserRegister,
+  createNewOrder,
+  updateOrderService,
+  getAllOrders,
+  deleteOrderById,
 };

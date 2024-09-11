@@ -44,8 +44,8 @@ const OrderPage = () => {
                                 <div className={cx('item-info')}>
                                     <h4>{item.name}</h4>
                                     <p>Quantity: {item.quantity}</p>
-                                    <p>Price: {item.price}₹</p>
-                                    <p>Total: {item.price * item.quantity}₹</p>
+                                    <p>Price: {item.price}$</p>
+                                    <p>Total: {item.price * item.quantity}$</p>
                                 </div>
                             </div>
                         ))
@@ -59,13 +59,13 @@ const OrderPage = () => {
                         <h3>Your Bill</h3>
                         <div className={cx('bill-details')}>
                             <p>
-                                SubTotal: <span>{calculateSubtotal()}₹</span>
+                                SubTotal: <span>{calculateSubtotal()}$</span>
                             </p>
                             <p>
-                                Tax: <span>{(calculateSubtotal() * 0.02).toFixed(2)}₹</span>
+                                Tax: <span>{(calculateSubtotal() * 0.02).toFixed(2)}$</span>
                             </p>
                             <p>
-                                Grand Total: <span>{(calculateSubtotal() * 1.02).toFixed(2)}₹</span>
+                                Grand Total: <span>{(calculateSubtotal() * 1.02).toFixed(2)}$</span>
                             </p>
                         </div>
                     </div>

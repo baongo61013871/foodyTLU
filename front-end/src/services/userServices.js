@@ -26,3 +26,23 @@ export const deleteFoodbyId = (foodId) => {
 export const editFoodApi = (food) => {
     return instance.put('/api/update-food', food);
 };
+
+export const getAllOrdersApi = () => {
+    return instance.get('/api/get-order');
+};
+
+export const deleteOrderById = (foodId) => {
+    return instance.delete('/api/delete-order', {
+        data: {
+            id: foodId,
+        },
+    });
+};
+
+export const updateOrderApi = (order) => {
+    return instance.put('/api/update-order', order);
+};
+
+export const createOrderApi = (order) => {
+    return instance.post('/api/create-order', order);
+};

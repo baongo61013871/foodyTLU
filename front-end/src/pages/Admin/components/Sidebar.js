@@ -6,10 +6,10 @@ const cx = classnames.bind(styles);
 function Sidebar() {
     return (
         <div className={cx('sidebar', 'font-vietnam')}>
-            <div className={cx('logo')}>Food Manager</div>
+            <div className={cx('logo')}>Trang Quản Trị TLUFOOD</div>
             <ul>
                 <li>
-                    <Link className={cx('manage-link')} to="/">
+                    <Link className={cx('manage-link')} to="/admin">
                         Dashboard
                     </Link>
                 </li>
