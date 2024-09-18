@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 11, 2024 lúc 06:29 AM
+-- Thời gian đã tạo: Th9 18, 2024 lúc 06:46 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -114,9 +114,7 @@ INSERT INTO `products` (`id`, `name`, `type`, `price`, `rating`, `time`, `descri
 (29, 'Cua Hoàng đế 2', 'AlaskaFood2', '5', '5', '10', 'Một con cua Khổng lồ đến từ Alaskaa', 'https://i.pinimg.com/564x/6e/fa/2d/6efa2d3cc9e24728fbe4961d8850a3cd.jpg', '2024-09-10 17:00:15', '2024-09-10 17:00:15'),
 (30, 'Vịt Quay Bắc Kinh', 'ChineseFood', '30', '5', '10', 'Một con cua Khổng lồ đến từ Alaskaa', 'https://i.pinimg.com/736x/7e/ca/a6/7ecaa661def1509c2ca37841685d79c7.jpg', '2024-09-10 17:01:16', '2024-09-10 17:01:16'),
 (31, 'Tom yum goong', 'ThaiLandFood', '30', '5', '10', 'Đồ ăn Thái Lan', 'https://i.pinimg.com/736x/e1/d4/3f/e1d43f8b3fdafeb9c2f83c1fb778f209.jpg', '2024-09-10 17:02:39', '2024-09-10 17:02:39'),
-(32, 'Assam laksa ', 'MalaiFood', '15', '5', '10', 'Đồ ăn Malay', 'https://i.pinimg.com/564x/fa/ff/43/faff4386b2533a37e804d0906c28dcd8.jpg', '2024-09-10 17:04:00', '2024-09-10 17:04:00'),
-(33, 'Bánh mì kẹp thịt', 'GermanyFood', '15', '5', '10', 'Đồ ăn của Đức', 'https://i.pinimg.com/564x/75/10/96/7510968e420dff80dcc5b2d65aabcd1e.jpg', '2024-09-10 17:05:33', '2024-09-10 17:05:33'),
-(34, 'PizzaHut', 'ItalianFood', '10', '3', '10', 'ngon', 'https://i.pinimg.com/564x/3e/b4/7d/3eb47da0b693b06f74e03a63be35aeb1.jpg', '2024-09-11 04:17:27', '2024-09-11 04:17:39');
+(32, 'Assam laksa ', 'MalaiFood', '15', '5', '10', 'Đồ ăn Malay', 'https://i.pinimg.com/564x/fa/ff/43/faff4386b2533a37e804d0906c28dcd8.jpg', '2024-09-10 17:04:00', '2024-09-10 17:04:00');
 
 -- --------------------------------------------------------
 
@@ -182,10 +180,10 @@ INSERT INTO `users` (`id`, `email`, `password`, `firstName`, `lastName`, `addres
 (10, 'vuminhthuan1@gmail.com', '$2a$10$WLixMhPqenBbJUpttX.zeeJ0Vy0tr9TRhvi8cTEcIG4S3hAcAwfT6', 'Minh Thuận', ' Vũ', 'Ha Noi', NULL, NULL, 'R1', '2024-09-10 05:02:03', '2024-09-10 05:02:03'),
 (11, 'tominh@gmail.com', '$2a$10$WLixMhPqenBbJUpttX.zeenh6H6RWfSDiivjYFUNwDWJvwrMcwD/W', 'Ngọc Minh', 'Tô', 'Ha Noi', NULL, NULL, 'R2', '2024-09-10 05:03:21', '2024-09-10 05:03:21'),
 (12, 'lehieu@gmail.com', '$2a$10$WLixMhPqenBbJUpttX.zeeXGr5U.IFtGu39zUwNg97UY3lpW7eGvu', 'Hiếu', 'Lê Văn', 'Ha Noi', NULL, NULL, 'R2', '2024-09-10 05:04:20', '2024-09-10 05:04:20'),
-(14, 'baongo6100@gmail.com', '$2a$10$VIRp1R4gbREAWsrMXGVwmullP.NrO3iXLzkyQi7P4F4tDU8ewGTiW', NULL, NULL, NULL, NULL, NULL, 'R2', '2024-09-10 18:23:42', '2024-09-10 18:23:42'),
 (15, 'baongo610ttttttt@gmail.com', '$2a$10$rimb4W1X45j8noEaaYWFLeR2K7AWJ/oJQxydymM/jZ6ybxqFwmUja', NULL, NULL, NULL, NULL, NULL, 'R1', '2024-09-10 18:31:56', '2024-09-10 18:31:56'),
 (16, 'baongo610tttttttt@gmail.com', '$2a$10$rimb4W1X45j8noEaaYWFLeR2K7AWJ/oJQxydymM/jZ6ybxqFwmUja', NULL, NULL, NULL, NULL, NULL, 'R1', '2024-09-10 18:34:54', '2024-09-10 18:34:54'),
-(17, 'tominhnghesi@gmail.com', '$2a$10$KvBH4DMS6KTitFqROss2H.4zQBdbeMH/mnhWdWkX7feW83iwKxOZC', NULL, NULL, NULL, NULL, NULL, 'R1', '2024-09-11 04:21:03', '2024-09-11 04:21:03');
+(17, 'tominhnghesi@gmail.com', '$2a$10$KvBH4DMS6KTitFqROss2H.4zQBdbeMH/mnhWdWkX7feW83iwKxOZC', NULL, NULL, NULL, NULL, NULL, 'R1', '2024-09-11 04:21:03', '2024-09-11 04:21:03'),
+(23, 'baongo610@gmail.com', '$2a$10$r3T7jMiuhJpMah9uyzwHRuXp4HyTMghbBr8.Mv2IdmZp2WtTO91tC', 'Bảo ', 'Ngô', 'Tả Thanh Oai, Thanh Trì ', NULL, NULL, 'R1', '2024-09-18 04:44:41', '2024-09-18 04:44:41');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -260,7 +258,7 @@ ALTER TABLE `order_details`
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT cho bảng `product_types`
@@ -272,7 +270,7 @@ ALTER TABLE `product_types`
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
