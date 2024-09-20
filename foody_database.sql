@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 18, 2024 lúc 06:46 AM
+-- Thời gian đã tạo: Th9 20, 2024 lúc 01:34 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -88,7 +88,7 @@ CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL,
-  `price` varchar(255) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
   `rating` varchar(255) DEFAULT NULL,
   `time` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
@@ -102,19 +102,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `type`, `price`, `rating`, `time`, `description`, `imageUrl`, `createdAt`, `updatedAt`) VALUES
-(20, 'QuanVuNoodle', 'ChineseFood', '20', '4', '10', 'Món ăn dành cho người bận rộn', 'https://www.hotelmousai.com/blog/wp-content/uploads/2021/12/Chow-Mein.jpg', '2024-09-10 16:02:27', '2024-09-10 16:42:32'),
-(21, 'PizzaHut', 'VietNamFood', '25', '4', '10', 'Món ăn dành cho người bận rộn', 'https://i.pinimg.com/564x/9b/cd/2b/9bcd2b2f95ed0111cd10a1bccdb767f5.jpg', '2024-09-10 16:04:07', '2024-09-10 16:09:32'),
-(22, 'BurgerKing3', 'American Food', '15', '5', '10', 'Học hành bận rộn quá thì ra làm món này vừa nhanh lại vừa rẻ :v', 'https://i.pinimg.com/564x/22/29/0d/22290dcfd246cc18d795fe19750e6e68.jpg', '2024-09-10 16:08:55', '2024-09-10 16:22:39'),
-(23, 'Bánh mì Sài Gòn', 'VietNamFood', '10', '5', '5', 'Món ăn số 1 Việt Nam', 'https://i.pinimg.com/564x/90/d6/62/90d662e323dd1636592db64529da5bda.jpg', '2024-09-10 16:48:01', '2024-09-10 16:48:01'),
-(24, 'Bún đậu mắm tôm', 'VietNamFood', '15', '5', '15', 'Đặc sản người con Việt Nam', 'https://i.pinimg.com/736x/c7/a7/55/c7a7554051337e29db3500ffc29282c4.jpg', '2024-09-10 16:49:40', '2024-09-10 16:49:40'),
-(25, 'Bento', 'JapanFood', '10', '4', '15', 'Một món ăn nổi tiếng của người Nhật', 'https://i.pinimg.com/564x/5e/58/80/5e588063a57d547d390b7f3ee57df0b0.jpg', '2024-09-10 16:51:16', '2024-09-10 16:51:16'),
-(26, 'KimBap', 'KoreanFood', '10', '3', '5', 'Một món ăn nổi tiếng của người Hàn Quốc', 'https://i.pinimg.com/736x/fc/01/94/fc0194fec915c0d2c14e9004253e67c2.jpg', '2024-09-10 16:54:58', '2024-09-10 16:54:58'),
-(27, 'KimBap1', 'KoreanFood1', '5', '3', '5', 'Một món ăn nổi tiếng của người Hàn Quốc', 'https://i.pinimg.com/736x/d1/95/9d/d1959dba7dc80a9c1738acefa89464b1.jpg', '2024-09-10 16:56:04', '2024-09-10 16:56:04'),
-(28, 'Cua Hoàng đế', 'AlaskaFood', '5', '5', '10', 'Một con cua Khổng lồ đến từ Alaskaa', 'https://i.pinimg.com/564x/7e/a8/b6/7ea8b6ea47e2bd8d2cc46d35db99d4c1.jpg', '2024-09-10 16:58:03', '2024-09-10 16:58:03'),
-(29, 'Cua Hoàng đế 2', 'AlaskaFood2', '5', '5', '10', 'Một con cua Khổng lồ đến từ Alaskaa', 'https://i.pinimg.com/564x/6e/fa/2d/6efa2d3cc9e24728fbe4961d8850a3cd.jpg', '2024-09-10 17:00:15', '2024-09-10 17:00:15'),
-(30, 'Vịt Quay Bắc Kinh', 'ChineseFood', '30', '5', '10', 'Một con cua Khổng lồ đến từ Alaskaa', 'https://i.pinimg.com/736x/7e/ca/a6/7ecaa661def1509c2ca37841685d79c7.jpg', '2024-09-10 17:01:16', '2024-09-10 17:01:16'),
-(31, 'Tom yum goong', 'ThaiLandFood', '30', '5', '10', 'Đồ ăn Thái Lan', 'https://i.pinimg.com/736x/e1/d4/3f/e1d43f8b3fdafeb9c2f83c1fb778f209.jpg', '2024-09-10 17:02:39', '2024-09-10 17:02:39'),
-(32, 'Assam laksa ', 'MalaiFood', '15', '5', '10', 'Đồ ăn Malay', 'https://i.pinimg.com/564x/fa/ff/43/faff4386b2533a37e804d0906c28dcd8.jpg', '2024-09-10 17:04:00', '2024-09-10 17:04:00');
+(1, 'Mì tôm Hảo Hảo', 'VietNamFood', 5, '5', '10', 'Món ăn nuôi sống hàng tỉ con người !!', 'https://i.pinimg.com/564x/eb/00/c8/eb00c86f6deb2fe512b41a4e00acca34.jpg', '2024-09-19 02:38:19', '2024-09-19 02:52:15'),
+(2, 'Phở bò', 'HaNoiFood', 10, '5', '10', 'Phở bò Việt Nam', 'https://i.pinimg.com/736x/2d/6c/72/2d6c729eefc5d137f1bde7ff1d15d43f.jpg', '2024-09-19 02:39:46', '2024-09-19 03:17:17');
 
 -- --------------------------------------------------------
 
@@ -258,7 +247,7 @@ ALTER TABLE `order_details`
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT cho bảng `product_types`
