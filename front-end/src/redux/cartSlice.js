@@ -12,6 +12,7 @@ export const cartSlice = createSlice({
     reducers: {
         addItem: (state, action) => {
             const newItem = action.payload;
+            console.log(action.payload, 'payload');
             const existingItem = state.cartItems.find((item) => item.id === newItem.id);
             const price = parseInt(newItem.price);
             if (existingItem) {

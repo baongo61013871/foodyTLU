@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 
 const MenuPage = () => {
     const foodItems = useSelector((state) => state.foods.foodItems);
-
+    console.log(foodItems);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState(foodItems);
 
@@ -40,8 +40,8 @@ const MenuPage = () => {
         <div className={cx('wrapper')}>
             <Header />
             <div className={cx('menu-page', 'container', 'py-5')}>
-                <h2 className={cx('page-title', 'text-center', 'fw-bold', 'mb-4', 'fs-1')}>
-                    Search It, Eat It :- That's It!
+                <h2 className={cx('page-title', 'text-center', 'fw-bold', 'mb-4', 'fs-1', 'font-vietnam')}>
+                    Tinh hoa ẩm thực, chinh phục vị giác!{' '}
                 </h2>
                 <div className={cx('search-wrapper', 'text-end')}>
                     <InputGroup className={cx('search-bar')}>

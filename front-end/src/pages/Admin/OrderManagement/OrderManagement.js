@@ -62,7 +62,7 @@ function OrderManagement() {
                     <div className={cx('table-container')}>
                         <table className={cx('order-table')}>
                             <thead>
-                                <tr>
+                                <tr className="font-vietnam">
                                     <th>Mã đơn hàng</th>
                                     <th>Khách hàng</th>
                                     <th>Ngày đặt</th>

@@ -77,7 +77,7 @@ function FoodManagement() {
                         </button>
                         <table className={cx('food-table')}>
                             <thead>
-                                <tr>
+                                <tr className="font-vietnam">
                                     <th>Mã món</th>
                                     <th>Tên món</th>
                                     <th>Loại món</th>

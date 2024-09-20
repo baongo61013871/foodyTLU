@@ -143,7 +143,7 @@ const Login = () => {
                     ) : (
                         <>
                             <div className={cx('col-12', 'form-group')}>
-                                <label>Username</label>
+                                <label>Email</label>
                                 <input
                                     placeholder="Enter Your Username"
                                     type="text"

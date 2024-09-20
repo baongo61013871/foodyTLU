@@ -24,9 +24,11 @@ const ProductDetail = () => {
     const product = foodItems.find((item) => item.id === parseInt(id)); // Find the product using the id
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     if (!product) {
         return <div>Product not found!</div>; // If no product is found, display this message
     }
+    console.log('mitom', product);
 
     // Function to render the rating stars
     const renderStars = (rating) => {
@@ -59,15 +61,13 @@ const ProductDetail = () => {
             <Header />
             <div className="container">
                 <div className={cx('product-detail', 'container', 'py-5')}>
-                    <h2 className={cx('page-title', 'text-center', 'fw-bold', 'mb-4', 'fs-1', 'font-vietnam')}>
-                        {product.name}
-                    </h2>
+                    <h2 className={cx('page-title', 'text-center', 'mb-4', 'fs-1', 'font-vietnam')}>{product.name}</h2>
                     <div className={cx('row', 'g-4')}>
                         <div className={cx('col-md-6')}>
                             <img src={product.imageUrl} alt={product.name} className={cx('product-img')} />
                         </div>
                         <div className={cx('col-md-6')}>
-                            <h3 className={cx('fw-bold', 'mb-3')}>Price: {product.price}$</h3>
+                            <h3 className={cx('price', 'fw-bold', 'mb-3')}>Price: {product.price}$</h3>
                             <p className={cx('text-muted')}>{product.type}</p>
                             <div className={cx('d-flex', 'align-items-center', 'mb-3')}>
                                 {renderStars(product.rating)}
