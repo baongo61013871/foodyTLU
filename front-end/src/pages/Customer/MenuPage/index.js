@@ -40,7 +40,7 @@ const MenuPage = () => {
         <div className={cx('wrapper')}>
             <Header />
             <div className={cx('menu-page', 'container', 'py-5')}>
-                <h2 className={cx('page-title', 'text-center', 'fw-bold', 'mb-4', 'fs-1', 'font-vietnam')}>
+                <h2 className={cx('page-title', 'text-center', 'mb-4', 'fs-1', 'font-vietnam')}>
                     Tinh hoa ẩm thực, chinh phục vị giác!{' '}
                 </h2>
                 <div className={cx('search-wrapper', 'text-end')}>

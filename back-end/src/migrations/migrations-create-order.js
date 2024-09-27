@@ -1,44 +1,46 @@
 "use strict";
-/** @type {import('sequelize-cli').Migration} */
+
+const { NOW } = require("sequelize");
+const { sequelize } = require("../models");
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable("orders", {
       id: {
-        allowNull: false,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      user_id: {
-        type: Sequelize.INTEGER,
+        allowNull: false,
       },
 
+      paymentMethod: {
+        type: Sequelize.STRING,
+      },
+      totalPrice: {
+        type: Sequelize.INTEGER,
+      },
       status: {
         type: Sequelize.STRING,
       },
-
-      total: {
-        type: Sequelize.INTEGER,
-      },
-
-      shipping_address: {
-        type: Sequelize.STRING,
+      shippingAddress: {
+        type: Sequelize.TEXT,
       },
       orderDate: {
-        allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("NOW"),
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("NOW"),
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("NOW"),
       },
     });
   },
-  async down(queryInterface, Sequelize) {
+
+  down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable("orders");
   },
 };

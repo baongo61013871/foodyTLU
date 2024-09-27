@@ -71,7 +71,7 @@ function FoodManagement() {
             <div className={cx('wrapper')}>
                 <div className={cx('content-food')}>
                     <Header />
-                    <div className={cx('table-container')}>
+                    <div className={cx('table-container', 'font-vietnam')}>
                         <button className={cx('add-button')} onClick={() => handleOpenModal('add')}>
                             Thêm món ăn
                         </button>
@@ -96,7 +96,10 @@ function FoodManagement() {
                                         <td>{food.name}</td>
                                         <td>{food.type}</td>
                                         <td>
-                                            {food.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                            {food.price.toLocaleString('vi-EN', {
+                                                style: 'currency',
+                                                currency: 'USD',
+                                            })}
                                         </td>
                                         <td>{food.rating}</td>
                                         <td>{food.time}</td>

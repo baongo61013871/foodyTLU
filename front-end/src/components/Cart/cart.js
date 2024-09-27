@@ -6,16 +6,32 @@ import styles from './Cart.module.scss';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { fetchCart } from '~/redux/cartSlice';
+import { useEffect } from 'react';
 
 const cx = classNames.bind(styles);
 
 const Cart = () => {
-    const cartItems = useSelector((state) => state.cart.cartItems);
-    const totalQuantity = useSelector((state) => state.cart.totalQuantity);
-    const totalPrice = useSelector((state) => state.cart.totalPrice);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [selectedItems, setSelectedItems] = useState([]);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { cartItems, totalQuantity, totalPrice, status, error } = useSelector((state) => state.cart);
+    const userId = useSelector((state) => state.auth.user.id); // Lấy userId từ auth state
+
+    useEffect(() => {
+        if (status === 'idle') {
+            // Gọi fetchCart khi component được render
+            dispatch(fetchCart(userId));
+        }
+    }, [dispatch, userId, status]);
+
+    if (status === 'loading') {
+        return <div>Loading giỏ hàng...</div>;
+    }
+
+    if (status === 'failed') {
+        return <div>Error: {error}</div>;
+    }
 
     const handleRemoveItem = (id) => {
         dispatch(removeItem(id));

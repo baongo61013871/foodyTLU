@@ -1,14 +1,30 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styles from './OrderPage.module.scss';
 import classNames from 'classnames/bind';
 import Header from '~/components/Header';
-
+import { addOrderItem } from '~/redux/orderSlice';
+import { createOrderApi } from '~/services/userServices';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import CustomToast from '~/components/CustomToast/CustomToast';
 const cx = classNames.bind(styles);
 
 const OrderPage = () => {
     const cartItems = useSelector((state) => state.cart.cartItems) || [];
+    const orders = useSelector((state) => state.orders.orderItems);
+    const totalOrders = orders.length;
+    console.log(totalOrders);
+    const user = useSelector((state) => state.auth.user);
+    const dispatch = useDispatch();
+    const filterCartItems = cartItems.map((item) => {
+        return {
+            productId: item.id,
+            price: item.price,
+            quantity: item.quantity,
+        };
+    });
 
     const [paymentMethod, setPaymentMethod] = useState('COD');
     const [address, setAddress] = useState('');
@@ -18,12 +34,28 @@ const OrderPage = () => {
         return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     };
 
-    const handlePlaceOrder = () => {
+    const handlePlaceOrder = async () => {
         if (!address) {
             alert('Please enter your address!');
             return;
         }
-        alert(`Order placed with payment method: ${paymentMethod} Succeed!!!`);
+        try {
+            const data = await createOrderApi({
+                filterCartItems, // danh sách sản phẩm
+                paymentMethod,
+                shippingAddress: address,
+                userId: user.id, // lấy từ state
+            });
+
+            if (data.errCode === 0) {
+                toast.success(<CustomToast success />, {});
+                // dispatch(addOrderItem(orders));
+            } else {
+                toast.error(<CustomToast />, {});
+            }
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     const handleCancelOrder = () => {
@@ -124,6 +156,17 @@ const OrderPage = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer
+                className={cx('toast-message', 'mt-5')}
+                autoClose={5000}
+                hideProgressBar={true}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </div>
     );
 };

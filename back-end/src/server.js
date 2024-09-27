@@ -9,8 +9,8 @@ require("dotenv").config();
 let port = process.env.PORT || 6969;
 let app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(cors());
 viewEngine(app);
 initWebRoutes(app);

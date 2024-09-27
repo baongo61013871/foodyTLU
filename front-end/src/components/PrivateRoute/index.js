@@ -1,10 +1,10 @@
 // src/components/PrivateRoute.js
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-
 const PrivateRoute = ({ children, isProtected }) => {
     const { isAuthenticated, user } = useSelector((state) => state.auth);
-    const userCheckRole = user.user.roleId;
+    const userCheckRole = user?.user?.roleId;
+
     if (!isAuthenticated) {
         // Nếu chưa đăng nhập, chuyển hướng tới trang đăng nhập
         return <Navigate to="/login" />;

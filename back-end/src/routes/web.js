@@ -13,9 +13,11 @@ let initWebRoutes = (app) => {
   router.get("/edit-crud", homeController.getEditCRUD);
   router.post("/put-crud", homeController.putCRUD);
   router.get("/delete-crud", homeController.deleteCRUD);
-
+  // user
   router.post("/api/login", userController.handleLogin);
   router.post("/api/register", userController.handleRegister);
+  router.put("/api/update-user", userController.updateUserInfor);
+
   // food
   router.post("/api/create-food", userController.createFood);
   router.get("/api/get-food", userController.getFoods);
@@ -24,9 +26,14 @@ let initWebRoutes = (app) => {
   // order
 
   router.post("/api/create-order", userController.createOrder);
-  router.get("/api/get-order", userController.getOrders);
+  router.get("/api/get-order", userController.getAllOrders);
   router.delete("/api/delete-order", userController.deleteOrder);
-  router.put("/api/update-order", userController.updateOrder);
+  // router.put("/api/update-order", userController.updateOrder);
+
+  // cart
+  // router.get("/api/cart/:userId", userController.getCartByUserId);
+  // router.post("/api/cart", userController.saveCart);
+
   return app.use("/", router);
 };
 

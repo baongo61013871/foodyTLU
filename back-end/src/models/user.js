@@ -8,7 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.hasMany(models.Order, {
+        foreignKey: "userId",
+        as: "orders", // Tên alias để sử dụng khi truy vấn
+      });
     }
   }
   User.init(
@@ -18,9 +21,11 @@ module.exports = (sequelize, DataTypes) => {
       firstName: DataTypes.STRING,
       lastName: DataTypes.STRING,
       address: DataTypes.STRING,
-      phoneNumber: DataTypes.STRING,
+      phonenumber: DataTypes.STRING,
       roleId: DataTypes.STRING,
-      image: DataTypes.STRING,
+      gender: DataTypes.STRING,
+      birth: DataTypes.STRING,
+      image: DataTypes.BLOB("long"),
     },
     {
       sequelize,

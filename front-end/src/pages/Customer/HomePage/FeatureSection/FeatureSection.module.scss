@@ -1,7 +1,9 @@
 // src/components/SectionFeatures.module.scss
 .features-section {
+  font-size: 1.5rem;
+  font-weight: 500;
   background-color: #fff;
-  padding: 60px 0;
+  padding: 60px 0 100px;
 
   .feature-item {
     text-align: center;
@@ -34,7 +36,6 @@
   }
 
   .section-description {
-    font-size: 1.6rem;
     max-width: 800px;
     margin: 0 auto;
   }

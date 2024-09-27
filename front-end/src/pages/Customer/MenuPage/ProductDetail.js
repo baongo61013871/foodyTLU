@@ -28,7 +28,6 @@ const ProductDetail = () => {
     if (!product) {
         return <div>Product not found!</div>; // If no product is found, display this message
     }
-    console.log('mitom', product);
 
     // Function to render the rating stars
     const renderStars = (rating) => {

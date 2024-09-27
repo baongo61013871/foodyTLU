@@ -9,7 +9,7 @@ const FeatureSection = () => {
     return (
         <div className="container">
             {' '}
-            <div className={cx('features-section', 'text-center', 'container', 'py-5', 'font-vietnam')}>
+            <div className={cx('features-section', 'text-center', 'container', 'font-vietnam')}>
                 <h2 className={cx('section-title', 'mb-4', 'fw-bold', 'text-success')}>
                     Mang đến cho bạn món ăn ưa thích, nóng hổi và ngon lành
                 </h2>
@@ -23,7 +23,7 @@ const FeatureSection = () => {
                 <div className={cx('row', 'g-4 mt-3')}>
                     <div className={cx('col-md-6', 'feature-item')}>
                         <div className={cx('feature-img', 'mx-auto', 'rounded-circle')}></div>
-                        <h4 className={cx('mt-4', 'text-success', 'mb-3 fs-3 fw-bold')}>
+                        <h4 className={cx('mt-4', 'text-success', 'mb-3 fs-2 fw-bold')}>
                             Đặt đồ ăn online chỉ sau vài cú chạm.
                         </h4>
                         <p>
@@ -34,7 +34,7 @@ const FeatureSection = () => {
 
                     <div className={cx('col-md-6', 'feature-item')}>
                         <div className={cx('feature-img-2', 'mx-auto', 'rounded-circle')}></div>
-                        <h4 className={cx('mt-4', 'text-success', 'mb-3 fs-3 fw-bold')}>Đa dạng lựa chọn.</h4>
+                        <h4 className={cx('mt-4', 'text-success', 'mb-3 fs-2 fw-bold')}>Đa dạng lựa chọn.</h4>
                         <p>
                             Danh sách đa dạng các món ăn của chúng tôi có thể phục vụ cho mọi nhu cầu ăn uống của bạn.
                         </p>

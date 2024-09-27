@@ -1,4 +1,5 @@
 import instance from '~/utils/axios';
+// user
 export const handleLoginApi = (userEmail, userPassword) => {
     return instance.post('/api/login', { email: userEmail, password: userPassword });
 };
@@ -7,6 +8,11 @@ export const handleRegisterApi = (userEmail, userPassword) => {
     return instance.post('/api/register', { email: userEmail, password: userPassword });
 };
 
+export const editUserInfor = (user) => {
+    return instance.put('/api/update-user', user);
+};
+
+// food
 export const createFoodApi = (food) => {
     return instance.post('/api/create-food', food);
 };
@@ -27,6 +33,7 @@ export const editFoodApi = (food) => {
     return instance.put('/api/update-food', food);
 };
 
+// order
 export const getAllOrdersApi = () => {
     return instance.get('/api/get-order');
 };

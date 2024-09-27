@@ -4,7 +4,9 @@ import styles from './Header.module.scss';
 import classnames from 'classnames/bind';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '~/redux/authSlice'; // Import action logout từ authSlice
-
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLongArrowRight } from '@fortawesome/free-solid-svg-icons';
 const cx = classnames.bind(styles);
 
 const Header = () => {
@@ -13,7 +15,9 @@ const Header = () => {
 
     // Lấy thông tin người dùng từ Redux store
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    const user = useSelector((state) => state.auth.user).user;
+    const user = useSelector((state) => state.auth.user);
+
+    const userCheckRole = user?.roleId;
 
     // Chức năng đăng xuất
     const handleLogout = () => {
@@ -63,20 +67,42 @@ const Header = () => {
                                 Orders
                             </NavLink>
                         </li>
+                        <li className={cx('nav-item')}>
+                            <NavLink className={({ isActive }) => cx('nav-link', { active: isActive })} to="/account">
+                                Account
+                            </NavLink>
+                        </li>
                     </ul>
                     <div className="d-flex align-items-center">
                         {/* Nếu người dùng đã đăng nhập, hiển thị nút Đăng xuất và thông tin người dùng */}
                         {isAuthenticated && (
                             <>
                                 <span className={cx('nav-link', 'user-info', 'me-3', 'text-white')}>
-                                    Xin chào, {user.firstName}!
+                                    Xin chào, <span> {userCheckRole === 'R1' ? 'Admin' : ''}</span> {user?.firstName}!
                                 </span>
                                 <button
-                                    className={cx('btn', 'btn-outline-light', 'fs-6', 'px-4', 'py-3')}
+                                    className={cx('btn', 'btn-outline-light', 'btn--header', 'fs-6', 'px-4')}
                                     onClick={handleLogout}
                                 >
                                     Đăng xuất
                                 </button>
+                                {userCheckRole === 'R1' ? (
+                                    <Link
+                                        to="/admin"
+                                        className={cx(
+                                            'btn',
+                                            'btn-outline-light',
+                                            'btn--header',
+                                            'ms-2',
+                                            'fs-6',
+                                            'px-4',
+                                        )}
+                                    >
+                                        Trang Quản Trị <FontAwesomeIcon icon={faLongArrowRight} />
+                                    </Link>
+                                ) : (
+                                    ''
+                                )}
                             </>
                         )}
                     </div>

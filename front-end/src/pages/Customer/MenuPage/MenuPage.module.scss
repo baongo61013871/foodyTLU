@@ -1,5 +1,10 @@
 // src/components/MenuPage.module.scss
-.menu-page {
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  .menu-page {
+    flex-grow: 1;
     .filter-section {
       .filter-buttons {
         button {
@@ -18,5 +23,4 @@
         margin-bottom: 20px;
       }
   }
-
-  
+}

@@ -9,6 +9,7 @@ import Login from '~/pages/Auth/Login';
 import FoodManagement from '~/pages/Admin/FoodManagement/FoodManageMent';
 import OrderManagement from '~/pages/Admin/OrderManagement/OrderManagement';
 import PromotionManagement from '~/pages/Admin/PromotionManagement/PromotionManagement';
+import Account from '~/pages/Customer/AccountPage';
 
 // Public Routes
 const publicRoutes = [
@@ -16,6 +17,7 @@ const publicRoutes = [
     { path: '/menu', component: MenuPage, isProtected: 'customer' },
     { path: '/cart', component: CartPage, isProtected: 'customer' },
     { path: '/orders', component: OrderPage, isProtected: 'customer' },
+    { path: '/account', component: Account, isProtected: 'customer' },
     { path: '/product/:id', component: ProductDetail, product: true },
     { path: '/login', component: Login }, // Đăng nhập không yêu cầu bảo vệ
 ];

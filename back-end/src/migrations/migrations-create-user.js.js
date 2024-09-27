@@ -31,9 +31,15 @@ module.exports = {
       },
 
       image: {
-        type: Sequelize.STRING,
+        type: Sequelize.BLOB("long"),
       },
 
+      birth: {
+        type: Sequelize.DATE,
+      },
+      gender: {
+        type: Sequelize.STRING,
+      },
       roleId: {
         type: Sequelize.STRING,
       },

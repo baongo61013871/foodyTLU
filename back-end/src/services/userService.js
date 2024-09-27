@@ -1,5 +1,7 @@
+import { where } from "sequelize";
 import db from "../models/index";
 import bcrypt from "bcryptjs";
+import orderdetail from "../models/orderdetail";
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -24,7 +26,19 @@ let handleUserLogin = (email, password) => {
         // compare password
         // bcrypt.compareSync("B4c0/\/", hash); // true
         let user = await db.User.findOne({
-          attributes: ["email", "roleId", "password", "firstName", "lastName"],
+          attributes: [
+            "address",
+            "phonenumber",
+            "gender",
+            "email",
+            "birth",
+            "roleId",
+            "password",
+            "firstName",
+            "lastName",
+            "image",
+            "id",
+          ],
           where: { email: email },
           raw: true,
         });
@@ -101,6 +115,52 @@ let checkUserEmail = (userEmail) => {
     }
   });
 };
+let updateUserInforService = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await db.User.update(
+        {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          address: data.address,
+          phonenumber: data.phonenumber,
+          gender: data.gender,
+          birth: data.birthDate,
+          password: data.password,
+          image: data.image,
+        },
+        {
+          where: { id: data.id },
+        }
+        // update user sau khi cap nhat
+      );
+      const updatedUser = await db.User.findOne({
+        attributes: [
+          "address",
+          "phonenumber",
+          "gender",
+          "email",
+          "birth",
+          "roleId",
+          "password",
+          "firstName",
+          "lastName",
+          "image",
+          "id",
+        ],
+        where: { id: data.id },
+        raw: true,
+      });
+      if (updatedUser) {
+        delete updatedUser.password;
+      }
+      console.log(updatedUser);
+      resolve(updatedUser);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 
 const createNewFood = async (data) => {
   try {
@@ -167,24 +227,69 @@ const updateFoodService = async (foodData) => {
   }
 };
 
-const createNewOrder = async (orderData) => {
+const createNewOrder = async (
+  userId,
+  filterCartItems,
+  paymentMethod,
+  shippingAddress
+) => {
+  // console.log("check cartitem from service", filterCartItems);
   try {
-    const newOrder = await db.Order.create({
-      user_id: orderData.user_id,
-      status: orderData.status,
-      shipping_address: orderData.shipping_address,
-      total: orderData.total,
-      orderDate: orderData.orderDate,
+    // Tính tổng tiền của đơn hàng
+    const totalPrice = filterCartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+
+    // Tạo đơn hàng
+    const order = await db.Order.create({
+      userId,
+      totalPrice,
+      paymentMethod,
+      shippingAddress,
+      status: "pending_confirmation",
     });
-    return newOrder;
+
+    const newOrder = await db.Order.findOne({
+      where: {
+        id: order.id,
+      },
+      raw: true,
+    });
+    const orderDetails = filterCartItems.map((item) => ({
+      orderId: newOrder.id, // Sử dụng order.id trả về
+      productId: item.productId,
+      quantity: item.quantity,
+      price: item.price,
+    }));
+
+    await db.OrderDetail.bulkCreate(orderDetails);
+
+    return { message: "Order created successfully", errCode: 0, newOrder };
   } catch (error) {
-    throw new Error(error);
+    console.error(error);
+    return { message: "Failed to create order", errCode: 1 };
   }
 };
 
-const getAllOrders = async () => {
-  // Thực hiện logic để lấy tất cả đơn hàng từ cơ sở dữ liệu
-  return await db.Order.findAll();
+const getAllOrdersService = async () => {
+  try {
+    const orders = await db.Order.findAll({
+      include: [
+        {
+          model: db.User,
+          as: "user", // Sử dụng alias đã định nghĩa
+          attributes: ["firstName", "lastName", "email"],
+        },
+      ],
+      raw: true,
+      nest: true,
+    });
+    return { errCode: 0, message: "get all user succeed!!", orders };
+  } catch (e) {
+    console.log(e);
+    return { errCode: 1, message: "get all user failed!!" };
+  }
 };
 
 const deleteOrderById = async (orderId) => {
@@ -201,6 +306,23 @@ const updateOrderService = async (orderData) => {
   }
   return null;
 };
+
+//  Cart Service
+// const getCartFromService = async (userId) => {
+//   try {
+//     const cart = await db.Cart.findOne({
+//       where: { userId },
+//       include: [{ model: CartItem }],
+//     });
+//     if (!cart) {
+//       return { errCode: 3, errMessage: "Invaliable find your cart" };
+//     }
+
+//     return cart;
+//   } catch (e) {
+//     return { errCode: 4, errMessage: "Something wrong from server" };
+//   }
+// };
 module.exports = {
   handleUserLogin,
   handleUserRegister,
@@ -210,6 +332,8 @@ module.exports = {
   updateFoodService,
   createNewOrder,
   updateOrderService,
-  getAllOrders,
+  getAllOrdersService,
   deleteOrderById,
+  updateUserInforService,
+  // getCartFromService,
 };

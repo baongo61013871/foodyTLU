@@ -43,6 +43,24 @@ let handleRegister = async (req, res) => {
     });
   }
 };
+
+let updateUserInfor = async (req, res) => {
+  try {
+    let data = req.body;
+    if (!data.id) {
+      return res
+        .status(400)
+        .json({ message: "User ID is required for updating.", errCode: 1 });
+    }
+    let user = await userService.updateUserInforService(data);
+
+    return res.json({ errCode: 0, message: "Ok", data: user });
+  } catch (e) {
+    return res
+      .status(500)
+      .json({ message: "Error updating", error: e.message });
+  }
+};
 const createFood = async (req, res) => {
   try {
     let foodItem = req.body;
@@ -133,27 +151,43 @@ const updateFood = async (req, res) => {
 // Order
 
 const createOrder = async (req, res) => {
-  try {
-    const orderData = req.body; // Lấy dữ liệu đơn hàng từ request body
-    const order = await userService.createNewOrder(orderData); // Gọi hàm dịch vụ để tạo đơn hàng mới
-    return res
-      .status(201)
-      .json({ message: "Order created successfully", data: order }); // Trả về phản hồi thành công
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error creating order", error: error.message }); // Trả về phản hồi lỗi nếu có
+  const { userId, filterCartItems, paymentMethod, shippingAddress } = req.body;
+
+  const data = await userService.createNewOrder(
+    userId,
+    filterCartItems,
+    paymentMethod,
+    shippingAddress
+  );
+  if (data.errCode === 0) {
+    res.status(201).json({
+      message: data.message,
+      order: data,
+      errCode: data.errCode,
+    });
+  } else {
+    res.status(500).json({
+      message: data.message,
+      errCode: data.errCode,
+    });
   }
 };
 
-const getOrders = async (req, res) => {
-  try {
-    const orders = await userService.getAllOrders(); // Gọi hàm dịch vụ để lấy tất cả đơn hàng
-    return res.status(200).json({ data: orders }); // Trả về phản hồi thành công với danh sách đơn hàng
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error retrieving orders", error: error.message }); // Trả về phản hồi lỗi nếu có
+const getAllOrders = async (req, res) => {
+  const data = await userService.getAllOrdersService();
+
+  console.log(data);
+  if (data.errCode === 0) {
+    res.status(201).json({
+      message: data.message,
+      order: data.orders,
+      errCode: data.errCode,
+    });
+  } else {
+    res.status(500).json({
+      message: data.message,
+      errCode: data.errCode,
+    });
   }
 };
 
@@ -212,15 +246,35 @@ const updateOrder = async (req, res) => {
       .json({ message: `Error updating order: ${error.message}` }); // Trả về phản hồi lỗi nếu có
   }
 };
+
+// Cart
+
+// const getCart = async (req, res) => {
+//   const userId = req.query.userId;
+//   try {
+//     const cart = await getCartFromService(userId);
+//     return res.status(200).json({ data: cart, errCode: 0, errMessage: "ok" });
+//   } catch (error) {
+//     return res
+//       .status(500)
+//       .json({ errCode: 1, errMessage: "Error retriving cart", error });
+//   }
+// };
+
+// const addtoCart = async (req,res) => {
+//   const {}
+// }
 module.exports = {
   handleLogin,
+  handleRegister,
+  updateUserInfor,
   createFood,
   getFoods,
   deleteFood,
   updateFood,
-  handleRegister,
   updateOrder,
-  getOrders,
+  getAllOrders,
   deleteOrder,
   createOrder,
+  // getCart,
 };

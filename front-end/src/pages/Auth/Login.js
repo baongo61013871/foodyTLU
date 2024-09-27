@@ -9,6 +9,7 @@ import { FaEye, FaEyeSlash, FaGooglePlusG, FaFacebookF } from 'react-icons/fa';
 import { handleLoginApi, handleRegisterApi } from '~/services/userServices'; // Import your API functions
 import { loginSuccess } from '~/redux/authSlice';
 import { toast, ToastContainer } from 'react-toastify';
+import { Buffer } from 'buffer';
 import 'react-toastify/dist/ReactToastify.css';
 
 const cx = classNames.bind(styles);
@@ -52,7 +53,12 @@ const Login = () => {
             if (data && data.errCode !== 0) {
                 setErrMessage(data.message);
             }
+
             if (data && data.errCode === 0) {
+                if (data.user.image) {
+                    let imageBase64 = new Buffer(data.user.image, 'base64').toString('binary');
+                    data.user.image = imageBase64;
+                }
                 dispatch(
                     loginSuccess({
                         user: data.user,

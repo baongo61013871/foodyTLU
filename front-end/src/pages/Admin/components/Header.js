@@ -3,7 +3,9 @@ import classnames from 'classnames/bind';
 import { useLocation, useNavigate } from 'react-router-dom'; // Import useNavigate để điều hướng
 import { useDispatch, useSelector } from 'react-redux'; // Import useDispatch để gửi action
 import { logout } from '~/redux/authSlice'; // Import action logout từ authSlice
-
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLongArrowRight } from '@fortawesome/free-solid-svg-icons';
 const cx = classnames.bind(styles);
 
 function Header() {
@@ -37,7 +39,7 @@ function Header() {
             <h1>{currentTitle}</h1>
             <div className={cx('user-info')}>
                 {/* Kiểm tra xem người dùng có đăng nhập không, nếu có thì hiển thị tên */}
-                {isAuthenticated && user ? <span>{user.user.firstName}</span> : <span>Khách</span>}
+                {isAuthenticated && user ? <span>{user?.firstName}</span> : <span>Khách</span>}
                 {isAuthenticated && (
                     <button
                         className="btn btn-outline-danger fs-4 px-4 py-2"
@@ -45,6 +47,13 @@ function Header() {
                     >
                         Đăng xuất
                     </button>
+                )}
+                {isAuthenticated && (
+                    <Link to="/">
+                        <button className="btn btn-warning ms-2 fs-4 px-4 py-2">
+                            Trang chủ <FontAwesomeIcon icon={faLongArrowRight} />
+                        </button>
+                    </Link>
                 )}
             </div>
         </header>

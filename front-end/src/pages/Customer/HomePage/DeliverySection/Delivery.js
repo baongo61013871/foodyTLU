@@ -51,7 +51,7 @@ const settings = {
 
 const Delivery = ({ foodType }) => {
     return (
-        <div className={cx('delivery-collection', 'border border-1 bg-light-emphasis')}>
+        <div className={cx('delivery-collection')}>
             <div className="container">
                 <div className={cx('collection-title')}>
                     {foodType ? <h1>{'More ' + foodType}</h1> : <h1>Our Cuisines</h1>}
