@@ -44,7 +44,7 @@ const ProductCard = ({ item }) => {
                         </span>
                     </div>
                     <div className={cx('card-body')}>
-                        <h5 className={cx('card-title', 'mb-1')}>{item.name}</h5>
+                        <h5 className={cx('card-title', 'mb-1', 'font-vietnam')}>{item.name}</h5>
                         <p className={cx('card-text', 'text-muted', 'mb-1')}>{item.type}</p>
                         <div className={cx('d-flex', 'justify-content-between', 'align-items-center')}>
                             <span className={cx('text-danger', 'fw-bold')}>{item.price}$</span>

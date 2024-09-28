@@ -49,7 +49,7 @@ const OrderPage = () => {
 
             if (data.errCode === 0) {
                 toast.success(<CustomToast success />, {});
-                // dispatch(addOrderItem(orders));
+                dispatch(addOrderItem(data.order));
             } else {
                 toast.error(<CustomToast />, {});
             }
@@ -65,7 +65,7 @@ const OrderPage = () => {
     return (
         <div className={cx('wrapper')}>
             <Header />
-            <div className={cx('order-container')}>
+            <div className={cx('order-container', 'font-vietnam')}>
                 <h2 className={cx('title')}>Your Order</h2>
 
                 <div className={cx('selected-items')}>
@@ -112,25 +112,25 @@ const OrderPage = () => {
                                     checked={paymentMethod === 'COD'}
                                     onChange={() => setPaymentMethod('COD')}
                                 />
-                                Cash on Delivery
+                                Cash on delivery
                             </label>
                             <label>
                                 <input
                                     type="radio"
-                                    value="Card"
-                                    checked={paymentMethod === 'Card'}
-                                    onChange={() => setPaymentMethod('Card')}
+                                    value="CK"
+                                    checked={paymentMethod === 'CK'}
+                                    onChange={() => setPaymentMethod('CK')}
                                 />
-                                Debit Card
+                                Transfer Method
                             </label>
                             <label>
                                 <input
                                     type="radio"
-                                    value="UPI"
-                                    checked={paymentMethod === 'UPI'}
-                                    onChange={() => setPaymentMethod('UPI')}
+                                    value="e-Wallet"
+                                    checked={paymentMethod === 'e-Wallet'}
+                                    onChange={() => setPaymentMethod('e-Wallet')}
                                 />
-                                UPI Payment
+                                E-Wallet
                             </label>
                         </div>
                     </div>

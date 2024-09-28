@@ -22,6 +22,7 @@ function Header() {
         '/food-management': 'Quản lý đồ ăn',
         '/order-management': 'Quản lý đơn hàng',
         '/promotion-management': 'Quản lý khuyến mãi',
+        '/customer-management': 'Quản lý người dùng',
         '/admin': 'Trang quản trị',
     };
 

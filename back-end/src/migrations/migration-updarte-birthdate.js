@@ -3,7 +3,6 @@ module.exports = {
     return Promise.all([
       queryInterface.changeColumn("Users", "birth", {
         type: Sequelize.STRING,
-        allowNull: true,
       }),
     ]);
   },

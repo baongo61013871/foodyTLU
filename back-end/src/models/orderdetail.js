@@ -12,14 +12,16 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "orderId",
         as: "order",
       });
+      OrderDetail.belongsTo(models.Product, {
+        foreignKey: "productId",
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL",
+      });
     }
   }
   OrderDetail.init(
     {
       orderId: {
-        type: DataTypes.INTEGER,
-      },
-      productId: {
         type: DataTypes.INTEGER,
       },
       quantity: {

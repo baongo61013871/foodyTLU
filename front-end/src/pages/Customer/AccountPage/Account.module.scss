@@ -6,18 +6,6 @@
     padding: 20px;
     min-height: 100vh;
         
-    
-    
-.sidebar {
-    width: 250px;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
 .avatar-section {
     display: flex;
@@ -44,23 +32,8 @@
     text-align: center;
 }
 
-.menu {
-    width: 100%;
-    list-style: none;
-    padding: 0;
-}
 
-.menu-item {
-    padding: 10px 15px;
-    font-size: 16px;
-    color: #555;
-    cursor: pointer;
-}
 
-.menu-item.active {
-    color: rgb(255 83 99);
-    font-weight: bold;
-}
 
 .profile-content {
     flex: 1;
@@ -144,4 +117,56 @@ input {
     margin-top: 20px;
 }
 
+}
+// MyOrders.module.scss
+.orders-container {
+    padding: 20px;
+    h2 {
+        margin-bottom: 20px;
+    }
+}
+
+.orders-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.order-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.order-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.order-details {
+    display: flex;
+    flex-wrap: wrap;
+
+    .order-detail-item {
+        margin-right: 20px;
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+    }
+}
+
+.submit-button {
+    background-color: rgb(255 83 99);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    &:hover {
+        opacity: 0.9;
+    }
 }

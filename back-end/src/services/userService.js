@@ -1,7 +1,6 @@
-import { where } from "sequelize";
+import { raw } from "body-parser";
 import db from "../models/index";
 import bcrypt from "bcryptjs";
-import orderdetail from "../models/orderdetail";
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -69,7 +68,6 @@ let handleUserLogin = (email, password) => {
 };
 
 let handleUserRegister = async (email, password) => {
-  console.log(email, password);
   return new Promise(async (resolve, reject) => {
     try {
       let userData = {};
@@ -97,6 +95,45 @@ let handleUserRegister = async (email, password) => {
       reject(e);
     }
   });
+};
+
+const changePasswordService = async (userId, oldPassword, newPassword) => {
+  try {
+    // Lấy thông tin người dùng từ DB
+    const user = await db.User.findByPk(userId);
+
+    if (!user) {
+      return {
+        errCode: 1,
+        message: "User not found!",
+      };
+    }
+
+    // Kiểm tra mật khẩu cũ(password, user.password);
+    const isMatch = await bcrypt.compareSync(oldPassword, user.password);
+    if (!isMatch) {
+      return {
+        errCode: 2,
+        message: "Old password is incorrect. Please try again.",
+      };
+    }
+
+    // Cập nhật mật khẩu mới
+    const hashedNewPassword = await hashUserPassword(newPassword);
+    user.password = hashedNewPassword;
+    await user.save();
+
+    return {
+      errCode: 0,
+      message: "Password changed successfully!",
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      errCode: 3,
+      message: "Internal server error",
+    };
+  }
 };
 let checkUserEmail = (userEmail) => {
   return new Promise(async (resolve, reject) => {
@@ -154,7 +191,6 @@ let updateUserInforService = (data) => {
       if (updatedUser) {
         delete updatedUser.password;
       }
-      console.log(updatedUser);
       resolve(updatedUser);
     } catch (e) {
       reject(e);
@@ -162,6 +198,40 @@ let updateUserInforService = (data) => {
   });
 };
 
+const getAllUsersService = async () => {
+  try {
+    const users = await db.User.findAll({
+      attributes: [
+        "id",
+        "firstName",
+        "lastName",
+        "email",
+        "phonenumber",
+        "address",
+        "gender",
+        "roleId",
+      ],
+
+      raw: true,
+    });
+    return {
+      errCode: 0,
+      message: "get all user succeed!!",
+      users,
+    };
+  } catch (e) {
+    console.log(e);
+    return { errCode: 1, message: "get all user failed!!" };
+  }
+};
+const deleteUserbyIdService = async (userId) => {
+  try {
+    await db.User.destroy({ where: { id: userId } });
+    return true;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 const createNewFood = async (data) => {
   try {
     const newFood = await db.Product.create({
@@ -233,7 +303,6 @@ const createNewOrder = async (
   paymentMethod,
   shippingAddress
 ) => {
-  // console.log("check cartitem from service", filterCartItems);
   try {
     // Tính tổng tiền của đơn hàng
     const totalPrice = filterCartItems.reduce(
@@ -249,7 +318,6 @@ const createNewOrder = async (
       shippingAddress,
       status: "pending_confirmation",
     });
-
     const newOrder = await db.Order.findOne({
       where: {
         id: order.id,
@@ -264,7 +332,6 @@ const createNewOrder = async (
     }));
 
     await db.OrderDetail.bulkCreate(orderDetails);
-
     return { message: "Order created successfully", errCode: 0, newOrder };
   } catch (error) {
     console.error(error);
@@ -278,14 +345,35 @@ const getAllOrdersService = async () => {
       include: [
         {
           model: db.User,
-          as: "user", // Sử dụng alias đã định nghĩa
+          as: "user",
           attributes: ["firstName", "lastName", "email"],
         },
+        {
+          model: db.OrderDetail,
+          as: "orderDetails",
+          attributes: ["quantity", "price"],
+          include: [
+            {
+              model: db.Product,
+              attributes: ["id", "name", "description", "price", "imageUrl"],
+            },
+          ],
+        },
       ],
-      raw: true,
-      nest: true,
     });
-    return { errCode: 0, message: "get all user succeed!!", orders };
+
+    // Xử lý thủ công để nhóm các orderDetails lại thành một mảng cho mỗi order
+    const formattedOrders = orders.map((order) => {
+      const orderObj = order.toJSON(); // Chuyển về object để dễ dàng thao tác
+      orderObj.orderDetails = orderObj.orderDetails || [];
+      return orderObj;
+    });
+
+    return {
+      errCode: 0,
+      message: "get all user succeed!!",
+      orders: formattedOrders,
+    };
   } catch (e) {
     console.log(e);
     return { errCode: 1, message: "get all user failed!!" };
@@ -294,7 +382,29 @@ const getAllOrdersService = async () => {
 
 const deleteOrderById = async (orderId) => {
   // Thực hiện logic để xóa đơn hàng theo ID
-  const result = await db.Order.destroy({ where: { id: orderId } });
+  try {
+    const result = await db.Order.destroy({ where: { id: orderId } });
+    if (result) {
+      const newOrder = await db.Order.findOne({
+        where: {
+          id: orderId,
+        },
+        raw: true,
+      });
+      return {
+        message: "delete order succeed!",
+        errCode: 0,
+        newOrder,
+      };
+    }
+  } catch (e) {
+    console.log(e);
+    return {
+      message: "delete order failed!",
+      errCode: 1,
+    };
+  }
+
   return result > 0; // Trả về true nếu xóa thành công
 };
 
@@ -305,6 +415,76 @@ const updateOrderService = async (orderData) => {
     return await order.update(orderData);
   }
   return null;
+};
+
+const confirmOrderService = async (orderId, status) => {
+  try {
+    // Tìm đơn hàng theo orderId
+    const order = await db.Order.findByPk(orderId);
+    if (!order) {
+      return { errCode: 2, message: "Order not found" };
+    }
+    if (status === "in delivery") {
+      if (order.status !== "pending_confirmation") {
+        return { errCode: 3, message: "Order cannot be confirmed" };
+      }
+
+      // Cập nhật trạng thái thành 'in delivery'
+      order.status = "in delivery";
+      await order.save();
+    }
+    // Kiểm tra trạng thái đơn hàng
+    if (status === "delivered") {
+      if (order.status !== "in delivery") {
+        return { errCode: 3, message: "Order cannot be confirmed" };
+      }
+
+      // Cập nhật trạng thái thành 'in delivery'
+      order.status = "delivered";
+      await order.save();
+    }
+    return {
+      errCode: 0,
+      message: "Order confirmed and now in delivery",
+      order,
+    };
+  } catch (error) {
+    console.error("Error confirming order:", error);
+    return { errCode: 1, message: "Internal 500 from Server" };
+  }
+};
+
+const getOrdersbyUserIdService = async (userId) => {
+  try {
+    const orders = await db.Order.findAll({
+      where: { userId },
+      include: [
+        {
+          model: db.OrderDetail,
+          as: "orderDetails",
+          attributes: ["quantity", "price"],
+          include: [
+            {
+              model: db.Product,
+              attributes: ["id", "name", "description", "price", "imageUrl"],
+            },
+          ],
+        },
+      ],
+    });
+
+    return {
+      errCode: 0,
+      message: "get order by userId succeed!",
+      data: orders,
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      errCode: 1,
+      message: "Internal 500 from server",
+    };
+  }
 };
 
 //  Cart Service
@@ -326,6 +506,8 @@ const updateOrderService = async (orderData) => {
 module.exports = {
   handleUserLogin,
   handleUserRegister,
+  getAllUsersService,
+  deleteUserbyIdService,
   createNewFood,
   getAllFoods,
   deleteFoodById,
@@ -335,5 +517,8 @@ module.exports = {
   getAllOrdersService,
   deleteOrderById,
   updateUserInforService,
+  confirmOrderService,
+  getOrdersbyUserIdService,
+  changePasswordService,
   // getCartFromService,
 };

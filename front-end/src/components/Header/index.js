@@ -78,7 +78,8 @@ const Header = () => {
                         {isAuthenticated && (
                             <>
                                 <span className={cx('nav-link', 'user-info', 'me-3', 'text-white')}>
-                                    Xin chào, <span> {userCheckRole === 'R1' ? 'Admin' : ''}</span> {user?.firstName}!
+                                    <span> {userCheckRole === 'R1' ? 'Admin' : ''}</span> {user?.firstName}
+                                    {user.image && <img className={cx('user-avatar')} src={user.image} alt="avatar" />}
                                 </span>
                                 <button
                                     className={cx('btn', 'btn-outline-light', 'btn--header', 'fs-6', 'px-4')}

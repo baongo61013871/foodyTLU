@@ -23,7 +23,6 @@ let handleLogin = async (req, res) => {
 
 let handleRegister = async (req, res) => {
   let { email, password } = req.body;
-  console.log(email, password);
   if (!email || !password) {
     return res.status(400).json({
       errCode: 1,
@@ -61,10 +60,42 @@ let updateUserInfor = async (req, res) => {
       .json({ message: "Error updating", error: e.message });
   }
 };
+
+const getAllUsers = async (req, res) => {
+  const data = await userService.getAllUsersService();
+
+  if (data.errCode === 0) {
+    res.status(201).json({
+      message: data.message,
+      users: data.users,
+      errCode: data.errCode,
+    });
+  } else {
+    res.status(500).json({
+      message: data.message,
+      errCode: data.errCode,
+    });
+  }
+};
+
+const deleteUserbyId = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    let check = await userService.deleteUserbyIdService(userId);
+    if (check) {
+      return res.status(200).json({ message: "User deleted successfully" });
+    } else {
+      return res.status(301).json({ message: "Error Deleting" });
+    }
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error deleting food", error: error.message });
+  }
+};
 const createFood = async (req, res) => {
   try {
     let foodItem = req.body;
-    console.log(foodItem);
     const food = await userService.createNewFood(foodItem);
     return res
       .status(201)
@@ -162,7 +193,7 @@ const createOrder = async (req, res) => {
   if (data.errCode === 0) {
     res.status(201).json({
       message: data.message,
-      order: data,
+      order: data.newOrder,
       errCode: data.errCode,
     });
   } else {
@@ -176,7 +207,6 @@ const createOrder = async (req, res) => {
 const getAllOrders = async (req, res) => {
   const data = await userService.getAllOrdersService();
 
-  console.log(data);
   if (data.errCode === 0) {
     res.status(201).json({
       message: data.message,
@@ -197,14 +227,19 @@ const deleteOrder = async (req, res) => {
     const { id } = req.body; // Lấy ID đơn hàng từ request body
     const check = await userService.deleteOrderById(id); // Gọi hàm dịch vụ để xóa đơn hàng
     if (check) {
-      return res.status(200).json({ message: "Order deleted successfully" }); // Trả về phản hồi thành công nếu xóa thành công
+      return res.status(200).json({
+        message: check.message,
+        errCode: check.errCode,
+        order: check.newOrder,
+      }); // Trả về phản hồi thành công nếu xóa thành công
     } else {
-      return res.status(404).json({ message: "Error deleting order" }); // Trả về phản hồi lỗi nếu xóa thất bại
+      return res.status(500).json({
+        message: check.message,
+        errCode: check.errCode,
+      }); // Trả về phản hồi lỗi nếu có
     }
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "Error deleting order", error: error.message }); // Trả về phản hồi lỗi nếu có
+    console.log(e);
   }
 };
 
@@ -247,6 +282,65 @@ const updateOrder = async (req, res) => {
   }
 };
 
+const confirmOrder = async (req, res) => {
+  try {
+    const { orderId, status } = req.body; // Lấy dữ liệu đơn hàng từ request body
+    if (!orderId) {
+      return res
+        .status(400)
+        .json({ message: "Order ID is required for updating." }); // Kiểm tra nếu không có ID đơn hàng
+    }
+
+    const newStatus = await userService.confirmOrderService(orderId, status);
+    return res.status(200).json({
+      errCode: newStatus.errCode,
+      message: newStatus.message,
+      order: newStatus.order,
+    });
+  } catch (e) {
+    return res
+      .status(500)
+      .json({ errCode: newStatus.errCode, message: newStatus.message });
+  }
+};
+
+const getOrdersbyUserId = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const myOrder = await userService.getOrdersbyUserIdService(userId);
+    return res.status(200).json({
+      errCode: myOrder.errCode,
+      message: myOrder.message,
+      order: myOrder.data,
+    });
+  } catch (e) {
+    return res.status(500).json({
+      errCode: myOrder.errCode,
+      message: myOrder.message,
+    });
+  }
+};
+
+const changePassword = async (req, res) => {
+  const { userId, oldPassword, newPassword } = req.body;
+  try {
+    const userWithNewPassword = await userService.changePasswordService(
+      userId,
+      oldPassword,
+      newPassword
+    );
+    return res.status(200).json({
+      errCode: userWithNewPassword.errCode,
+      message: userWithNewPassword.message,
+      order: userWithNewPassword.data,
+    });
+  } catch (e) {
+    return res.status(500).json({
+      errCode: userWithNewPassword.errCode,
+      message: userWithNewPassword.message,
+    });
+  }
+};
 // Cart
 
 // const getCart = async (req, res) => {
@@ -268,6 +362,7 @@ module.exports = {
   handleLogin,
   handleRegister,
   updateUserInfor,
+  deleteUserbyId,
   createFood,
   getFoods,
   deleteFood,
@@ -276,5 +371,9 @@ module.exports = {
   getAllOrders,
   deleteOrder,
   createOrder,
+  confirmOrder,
+  getOrdersbyUserId,
+  changePassword,
+  getAllUsers,
   // getCart,
 };

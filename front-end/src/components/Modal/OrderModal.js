@@ -1,115 +1,72 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { addOrderItem, updateOrderItem } from '~/redux/orderSlice';
+import React, { useEffect } from 'react';
 import styles from './OrderModal.module.scss';
 import classNames from 'classnames/bind';
-import { createOrderApi, updateOrderApi } from '~/services/userServices';
 
 const cx = classNames.bind(styles);
 
-const OrderModal = ({ show, onClose, mode = 'add', orderData = null }) => {
-    const dispatch = useDispatch();
-
-    // Trạng thái cho dữ liệu đơn hàng
-    const [order, setOrder] = useState({
+const OrderModal = ({ show, onClose, orderDetailsData }) => {
+    const [order, setOrder] = React.useState({
         customerName: '',
-        foodItems: [],
+        orderDetails: [],
         totalPrice: 0,
         status: 'pending',
-        ...orderData, // Khởi tạo dữ liệu nếu có
+        ...orderDetailsData,
     });
 
-    // Khi `orderData` thay đổi, cập nhật giá trị đơn hàng
     useEffect(() => {
-        if (orderData) {
-            setOrder(orderData);
+        if (orderDetailsData) {
+            setOrder(orderDetailsData);
         }
-    }, [orderData]);
+    }, [orderDetailsData]);
 
-    // Hàm để xử lý thay đổi form
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setOrder({ ...order, [name]: value });
-    };
-
-    // Hàm để xử lý lưu đơn hàng (Thêm mới hoặc cập nhật)
-    const handleSave = async () => {
-        try {
-            if (mode === 'add') {
-                // Gọi API thêm đơn hàng mới
-                const response = await createOrderApi(order);
-                dispatch(addOrderItem(response.data));
-            } else if (mode === 'edit') {
-                // Gọi API cập nhật đơn hàng
-                const response = await updateOrderApi(order);
-                dispatch(updateOrderItem(response.data));
-            }
-            onClose(); // Đóng modal sau khi lưu thành công
-        } catch (error) {
-            console.error('Error saving order:', error.message);
-        }
-    };
+    if (!show) return null;
 
     return (
-        <Modal show={show} onHide={onClose} centered>
-            <Modal.Header closeButton>
-                <Modal.Title>{mode === 'add' ? 'Thêm Đơn Hàng' : 'Chỉnh Sửa Đơn Hàng'}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Form>
-                    <Form.Group controlId="formCustomerName" className={cx('form-group')}>
-                        <Form.Label>Tên Khách Hàng</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="customerName"
-                            value={order.customerName}
-                            onChange={handleChange}
-                            placeholder="Nhập tên khách hàng"
-                        />
-                    </Form.Group>
+        <div className={cx('modal-container', 'font-vietnam')}>
+            <div className={cx('modal')}>
+                <div className={cx('modal-header')}>
+                    <h2>Chi Tiết Đơn Hàng</h2>
+                    <button className={cx('close-button')} onClick={onClose}>
+                        X
+                    </button>
+                </div>
+                <div className={cx('modal-body')}>
+                    <h4>Tên Khách Hàng: {order.user.firstName}</h4>
 
-                    <Form.Group controlId="formFoodItems" className={cx('form-group')}>
-                        <Form.Label>Món Ăn</Form.Label>
-                        <Form.Control
-                            type="text"
-                            name="foodItems"
-                            value={order.foodItems.join(', ')} // Convert array to string
-                            onChange={handleChange}
-                            placeholder="Nhập món ăn (ví dụ: Pizza, Burger)"
-                        />
-                    </Form.Group>
+                    {order.orderDetails.map((detail, index) => (
+                        <div key={index} className={cx('order-item')}>
+                            <div className={cx('product-image')}>
+                                <img
+                                    src={detail.Product.imageUrl || '/placeholder.png'}
+                                    alt={detail.Product.name}
+                                    className={cx('image')}
+                                />
+                            </div>
+                            <div className={cx('product-info')}>
+                                <h5>{detail.Product.name}</h5>
+                                <p className={cx('description')}>{detail.Product.description}</p>
+                                <div className={cx('order-info')}>
+                                    <span className={cx('quantity')}>
+                                        <span className={cx('product-price', 'fs-5', 'me-2')}>{detail.price}$</span>x{' '}
+                                        {detail.quantity}
+                                    </span>
+                                    <span className={cx('price')}>Thành tiền: {detail.quantity * detail.price}$</span>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
 
-                    <Form.Group controlId="formTotalPrice" className={cx('form-group')}>
-                        <Form.Label>Tổng Giá</Form.Label>
-                        <Form.Control
-                            type="number"
-                            name="totalPrice"
-                            value={order.totalPrice}
-                            onChange={handleChange}
-                            placeholder="Nhập tổng giá"
-                        />
-                    </Form.Group>
-
-                    <Form.Group controlId="formStatus" className={cx('form-group')}>
-                        <Form.Label>Trạng Thái</Form.Label>
-                        <Form.Control as="select" name="status" value={order.status} onChange={handleChange}>
-                            <option value="pending">Đang Chờ</option>
-                            <option value="completed">Hoàn Thành</option>
-                            <option value="cancelled">Đã Hủy</option>
-                        </Form.Control>
-                    </Form.Group>
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={onClose}>
-                    Đóng
-                </Button>
-                <Button variant="primary" onClick={handleSave}>
-                    {mode === 'add' ? 'Thêm' : 'Cập Nhật'}
-                </Button>
-            </Modal.Footer>
-        </Modal>
+                    <div className={cx('total-price')}>
+                        <strong>Tổng giá đơn hàng: {order.totalPrice}₫</strong>
+                    </div>
+                </div>
+                <div className={cx('modal-footer')}>
+                    <button className={cx('close-btn')} onClick={onClose}>
+                        Đóng
+                    </button>
+                </div>
+            </div>
+        </div>
     );
 };
 

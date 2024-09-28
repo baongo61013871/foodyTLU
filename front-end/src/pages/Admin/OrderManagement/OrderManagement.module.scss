@@ -37,8 +37,11 @@
     color: white;
   }
   
-  .view-btn,
-  .cancel-btn {
+  .btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    .view-btn,
+  .cancel-btn,.confirm-btn,.deliver-btn{
     padding: 5px 10px;
     margin-right: 5px;
     border: none;
@@ -55,6 +58,22 @@
     background-color: #e74c3c;
     color: white;
   }
+  .confirm-btn {
+    background-color: #e74c3c;
+    color: white;
+  }
+  .deliver-btn{
+    background-color: #3498db;
+    color: white;
+  }
+  .confirm-btn:disabled,.deliver-btn:disabled {
+    background-color: #8d9296;
+    color: rgb(21, 19, 19);
+    cursor:not-allowed;
+  }
+  
+  
+}
   
   p {
     font-weight: bold;

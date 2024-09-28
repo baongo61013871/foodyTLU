@@ -15,8 +15,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const cx = classNames.bind(styles);
 
 const Login = () => {
-    const [username, setUsername] = useState('phngtudam71@gmail.com');
-    const [password, setPassword] = useState('phngTu71');
+    const [username, setUsername] = useState('sontung1994@gmail.com');
+    const [password, setPassword] = useState('tungnui1');
     const [email, setEmail] = useState(''); // For registration
     const [errMessage, setErrMessage] = useState('');
     const [isShowPassword, setIsShowPassword] = useState(false);
@@ -50,6 +50,7 @@ const Login = () => {
         setErrMessage('');
         try {
             let data = await handleLoginApi(username, password);
+            console.log(data);
             if (data && data.errCode !== 0) {
                 setErrMessage(data.message);
             }

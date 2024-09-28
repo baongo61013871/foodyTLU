@@ -17,6 +17,9 @@ let initWebRoutes = (app) => {
   router.post("/api/login", userController.handleLogin);
   router.post("/api/register", userController.handleRegister);
   router.put("/api/update-user", userController.updateUserInfor);
+  router.post("/api/change-password", userController.changePassword);
+  router.get("/api/get-all-user", userController.getAllUsers);
+  router.delete("/api/delete-user", userController.deleteUserbyId);
 
   // food
   router.post("/api/create-food", userController.createFood);
@@ -27,7 +30,13 @@ let initWebRoutes = (app) => {
 
   router.post("/api/create-order", userController.createOrder);
   router.get("/api/get-order", userController.getAllOrders);
+  router.get(
+    "/api/get-order-by-userId/:userId",
+    userController.getOrdersbyUserId
+  );
   router.delete("/api/delete-order", userController.deleteOrder);
+  router.put("/api/confirm-order", userController.confirmOrder);
+
   // router.put("/api/update-order", userController.updateOrder);
 
   // cart

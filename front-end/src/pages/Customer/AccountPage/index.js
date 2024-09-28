@@ -10,6 +10,8 @@ import images from '~/assets/images';
 import CommonUtils from '~/utils/CommonUtils';
 import BirthdatePicker from '~/components/DatePicker/BirthdatePicker';
 import { Buffer } from 'buffer';
+import Sidebar from '~/pages/Customer/AccountPage/components/SideBar';
+
 const cx = classNames.bind(styles);
 
 function Account() {
@@ -24,8 +26,6 @@ function Account() {
         image: users.image || '',
         address: users.address || '',
     });
-    console.log('check users', users);
-    console.log('check formData', formData);
 
     const [editingBirthdate, setEditingBirthdate] = useState(false); // Trạng thái chỉnh sửa ngày sinh
     const dispatch = useDispatch();
@@ -95,14 +95,7 @@ function Account() {
         <div className={cx('wrapper')}>
             <Header />
             <div className={cx('profile-container', 'font-vietnam2')}>
-                <div className={cx('sidebar')}>
-                    <ul className={cx('menu')}>
-                        <li className={cx('menu-item', 'active')}>Hồ Sơ</li>
-                        <li className={cx('menu-item')}>Đơn hàng của tôi</li>
-                        <li className={cx('menu-item')}>Đổi Mật Khẩu</li>
-                        <li className={cx('menu-item')}>Cài Đặt Thông Báo</li>
-                    </ul>
-                </div>
+                <Sidebar />
                 <div className={cx('profile-content')}>
                     <div className={cx('text-center')}>
                         <h2>Hồ Sơ Của Tôi</h2>
